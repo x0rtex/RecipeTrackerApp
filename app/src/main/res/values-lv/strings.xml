@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_get_started">Sākt</string>
+    <string name="app_name">Recepšu Pieraksts</string>
+    <string name="onboarding_welcome">Laipni Lūgti!</string>
+    <string name="home_search">Meklēt recepti…</string>
+    <string name="recipe_add">Pievienot Recepti</string>
+    <string name="recipe_view">Apskatīt Recepti</string>
+    <string name="recipe_edit">Rediģēt Recepti</string>
+    <string name="recipe_delete">Dzēst Recepti</string>
+    <string name="recipe_title">Nosaukums</string>
+    <string name="recipe_description">Apraksts</string>
+    <string name="recipe_ingredients">Sastāvdaļas</string>
+    <string name="recipe_servings">Porcijas</string>
+    <string name="recipe_image">Attēls</string>
+    <string name="recipe_image_add">Pievienot Attēlu</string>
+    <string name="recipe_image_change">Mainīt Attēlu</string>
+    <string name="recipe_cancel">Atcelt</string>
+    <string name="recipe_submit">Saglabāt</string>
+    <string name="settings">Iestatījumi</string>
+    <string name="settings_display">Displejs</string>
+    <string name="settings_display_theme">Tēma</string>
+    <string name="settings_display_font_size">Fonta Izmērs</string>
+    <string name="settings_units">Mērvienības</string>
+    <string name="settings_units_weight">Svars</string>
+    <string name="settings_units_volume">Tilpums</string>
+    <string name="settings_data">Dati</string>
+</resources>
