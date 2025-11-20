@@ -17,6 +17,7 @@
     <string name="recipe_image_change">Mainīt Attēlu</string>
     <string name="recipe_cancel">Atcelt</string>
     <string name="recipe_submit">Saglabāt</string>
+    <string name="back_button">Atpakaļ</string>
     <string name="settings">Iestatījumi</string>
     <string name="settings_display">Displejs</string>
     <string name="settings_display_theme">Tēma</string>

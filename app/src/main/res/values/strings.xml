@@ -27,6 +27,7 @@
     <!-- Recipe Cancel and Submit buttons -->
     <string name="recipe_cancel">Cancel</string>
     <string name="recipe_submit">Submit</string>
+    <string name="back_button">Back</string>
 
     <!-- Settings screen -->
     <string name="settings">Settings</string>
