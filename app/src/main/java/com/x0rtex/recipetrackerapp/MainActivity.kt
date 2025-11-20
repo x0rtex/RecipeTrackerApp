@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
                 val recipeViewModel: RecipeViewModel = viewModel()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                    RecipeApp()
                 }
             }
         }
