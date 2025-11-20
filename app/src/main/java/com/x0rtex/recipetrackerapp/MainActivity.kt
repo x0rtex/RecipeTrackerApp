@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.x0rtex.recipetrackerapp.ui.theme.RecipeTrackerAppTheme
 import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
 
