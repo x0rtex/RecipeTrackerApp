@@ -4,10 +4,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -16,11 +14,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.x0rtex.recipetrackerapp.ui.components.RecipeAppBar
+import com.x0rtex.recipetrackerapp.ui.components.BottomBar
+import com.x0rtex.recipetrackerapp.ui.components.TopBar
 import com.x0rtex.recipetrackerapp.ui.components.RecipeScreen
 import com.x0rtex.recipetrackerapp.ui.screens.AddRecipeScreen
 import com.x0rtex.recipetrackerapp.ui.screens.EditRecipeScreen
 import com.x0rtex.recipetrackerapp.ui.screens.HomeScreen
+import com.x0rtex.recipetrackerapp.ui.screens.OnboardingScreen
 import com.x0rtex.recipetrackerapp.ui.screens.SettingsScreen
 import com.x0rtex.recipetrackerapp.ui.screens.ViewRecipeScreen
 import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
@@ -37,10 +37,15 @@ fun RecipeApp(
 
     Scaffold(
         topBar = {
-            RecipeAppBar(
+            TopBar(
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
+            )
+        },
+        bottomBar = {
+            BottomBar(
+                currentScreen = currentScreen,
             )
         }
     ) { innerPadding ->
@@ -49,6 +54,18 @@ fun RecipeApp(
             startDestination = RecipeScreen.Home.name,
             modifier = Modifier.padding(innerPadding)
         ) {
+            // Onboarding Screen
+            composable(route = RecipeScreen.Onboarding.name) {
+                OnboardingScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium)),
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+
+            // Home Screen
             composable(route = RecipeScreen.Home.name) {
                 HomeScreen(
                     modifier = Modifier
@@ -59,6 +76,7 @@ fun RecipeApp(
                 )
             }
 
+            // Settings Screen
             composable(route = RecipeScreen.Settings.name) {
                 SettingsScreen(
                     modifier = Modifier
@@ -69,6 +87,7 @@ fun RecipeApp(
                 )
             }
 
+            // View Recipe Screen
             composable(route = RecipeScreen.ViewRecipe.name) {
                 ViewRecipeScreen(
                     modifier = Modifier
@@ -79,6 +98,7 @@ fun RecipeApp(
                 )
             }
 
+            // Add Recipe Screen
             composable(route = RecipeScreen.AddRecipe.name) {
                 AddRecipeScreen(
                     modifier = Modifier
@@ -89,6 +109,7 @@ fun RecipeApp(
                 )
             }
 
+            // Edit Recipe Screen
             composable(route = RecipeScreen.EditRecipe.name) {
                 EditRecipeScreen(
                     modifier = Modifier
