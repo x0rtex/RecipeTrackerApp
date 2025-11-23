@@ -1,5 +1,8 @@
 package com.x0rtex.recipetrackerapp.data.models
 
+import androidx.room.Entity
+
+@Entity(tableName = "recipes")
 data class RecipeEntity(
     val id: Int = 0,
     val title: String,
