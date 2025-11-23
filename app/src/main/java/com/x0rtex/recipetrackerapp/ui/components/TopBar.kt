@@ -17,7 +17,7 @@ import com.x0rtex.recipetrackerapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecipeAppBar(
+fun TopBar(
     modifier: Modifier = Modifier,
     currentScreen: RecipeScreen,
     canNavigateBack: Boolean,
@@ -45,10 +45,10 @@ fun RecipeAppBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun RecipeAppBarPreview(
+fun TopBarPreview(
     modifier: Modifier = Modifier,
 ) {
-    RecipeAppBar(
+    TopBar(
         modifier = modifier,
         currentScreen = RecipeScreen.Home,
         canNavigateBack = true,
