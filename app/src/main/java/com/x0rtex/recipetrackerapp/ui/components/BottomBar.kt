@@ -1,44 +1,83 @@
 package com.x0rtex.recipetrackerapp.ui.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.x0rtex.recipetrackerapp.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomBar(
     modifier: Modifier = Modifier,
     currentScreen: RecipeScreen,
+    navController: NavHostController = rememberNavController()
 ) {
     BottomAppBar(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         content = {
-            // Home button
-            IconButton(
+            // Home Screen Button
+            NavButton(
                 modifier = modifier,
-                onClick = {},
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Home,
-                    contentDescription = stringResource(R.string.app_name)
-                )
-            }
+                navController = navController,
+                navigateTo = RecipeScreen.Home,
+                icon = Icons.Filled.Home,
+                contentDescription = stringResource(R.string.app_name)
+            )
+
+            // Add Recipe Button
+            NavButton(
+                modifier = modifier,
+                navController = navController,
+                navigateTo = RecipeScreen.AddRecipe,
+                icon = Icons.Filled.Add,
+                contentDescription = stringResource(R.string.recipe_add)
+            )
+
+            // Settings Button
+            NavButton(
+                modifier = modifier,
+                navController = navController,
+                navigateTo = RecipeScreen.Settings,
+                icon = Icons.Filled.Settings,
+                contentDescription = stringResource(R.string.settings)
+            )
         },
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NavButton(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+    navigateTo: RecipeScreen,
+    icon: ImageVector,
+    contentDescription: String
+    ) {
+    IconButton(
+        modifier = modifier,
+        onClick = {
+            navController.navigate(navigateTo.name)
+        },
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription
+        )
+    }
+}
+
 @Preview
 @Composable
 fun BottomBarPreview(
