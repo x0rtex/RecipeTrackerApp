@@ -27,32 +27,34 @@ fun BottomBar(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         content = {
-            // Home Screen Button
-            NavButton(
-                modifier = modifier,
-                navController = navController,
-                navigateTo = RecipeScreen.Home,
-                icon = Icons.Filled.Home,
-                contentDescription = stringResource(R.string.app_name)
-            )
+            if (currentScreen != RecipeScreen.AddRecipe && currentScreen != RecipeScreen.EditRecipe) {
+                // Home Screen Button
+                NavButton(
+                    modifier = modifier,
+                    navController = navController,
+                    navigateTo = RecipeScreen.Home,
+                    icon = Icons.Filled.Home,
+                    contentDescription = stringResource(R.string.app_name)
+                )
 
-            // Add Recipe Button
-            NavButton(
-                modifier = modifier,
-                navController = navController,
-                navigateTo = RecipeScreen.AddRecipe,
-                icon = Icons.Filled.Add,
-                contentDescription = stringResource(R.string.recipe_add)
-            )
+                // Add Recipe Button
+                NavButton(
+                    modifier = modifier,
+                    navController = navController,
+                    navigateTo = RecipeScreen.AddRecipe,
+                    icon = Icons.Filled.Add,
+                    contentDescription = stringResource(R.string.recipe_add)
+                )
 
-            // Settings Button
-            NavButton(
-                modifier = modifier,
-                navController = navController,
-                navigateTo = RecipeScreen.Settings,
-                icon = Icons.Filled.Settings,
-                contentDescription = stringResource(R.string.settings)
-            )
+                // Settings Button
+                NavButton(
+                    modifier = modifier,
+                    navController = navController,
+                    navigateTo = RecipeScreen.Settings,
+                    icon = Icons.Filled.Settings,
+                    contentDescription = stringResource(R.string.settings)
+                )
+            }
         },
     )
 }
