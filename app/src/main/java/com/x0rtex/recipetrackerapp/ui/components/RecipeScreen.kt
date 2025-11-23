@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.x0rtex.recipetrackerapp.R
 
 enum class RecipeScreen(@param:StringRes val title: Int) {
+    Onboarding(title = R.string.onboarding),
     Home(title = R.string.app_name),
     AddRecipe(title = R.string.recipe_add),
     ViewRecipe(title = R.string.recipe_view),
