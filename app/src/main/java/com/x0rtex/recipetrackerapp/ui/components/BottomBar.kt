@@ -5,9 +5,11 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -54,6 +56,34 @@ fun BottomBar(
                     icon = Icons.Filled.Settings,
                     contentDescription = stringResource(R.string.settings)
                 )
+            } else {
+                // Confirm Button
+                Button(
+                    modifier = modifier,
+                    onClick = {
+                        navController.navigate(RecipeScreen.Home.name)
+                    },
+                    content = {
+                        Text(
+                            modifier = modifier,
+                            text = stringResource(R.string.recipe_submit)
+                        )
+                    }
+                )
+
+                // Cancel Button
+                Button(
+                    modifier = modifier,
+                    onClick = {
+                        navController.navigate(RecipeScreen.Home.name)
+                    },
+                    content = {
+                        Text(
+                            modifier = modifier,
+                            text = stringResource(R.string.recipe_cancel)
+                        )
+                    }
+                )
             }
         },
     )
@@ -66,11 +96,17 @@ fun NavButton(
     navigateTo: RecipeScreen,
     icon: ImageVector,
     contentDescription: String
-    ) {
+) {
     IconButton(
         modifier = modifier,
         onClick = {
-            navController.navigate(navigateTo.name)
+            navController.navigate(navigateTo.name) {
+                popUpTo(navController.graph.startDestinationId) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
         },
     ) {
         Icon(
