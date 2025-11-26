@@ -2,6 +2,7 @@
     <!-- Onboarding screen -->
     <string name="onboarding">Onboarding</string>
     <string name="onboarding_welcome">Welcome!</string>
+    <string name="onboarding_text">Track and manage your recipes with ease</string>
     <string name="onboarding_get_started">Get Started</string>
 
     <!-- Home screen -->
