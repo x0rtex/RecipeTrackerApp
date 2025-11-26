@@ -36,7 +36,7 @@ fun RecipeCard(
                 modifier = Modifier
                     .size(size = 72.dp)
                     .clip(shape = RoundedCornerShape(size = 10.dp)),
-                painter = painterResource(id = recipe.image),
+                painter = painterResource(id = android.R.drawable.ic_menu_gallery),  // TODO: Change to image url
                 contentDescription = null,
             )
             Column(
@@ -64,7 +64,6 @@ fun RecipeCardPreview() {
         description = "A classic Italian pasta dish.",
         ingredients = mutableListOf(),
         instructions = mutableListOf(),
-        image = android.R.drawable.ic_menu_gallery,
         servings = 2
     )
     RecipeCard(
