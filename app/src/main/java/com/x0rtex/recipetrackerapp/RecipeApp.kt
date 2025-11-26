@@ -27,8 +27,9 @@ import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
 
 @Composable
 fun RecipeApp(
-    viewModel: RecipeViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
+    recipeViewModel: RecipeViewModel = viewModel(),
+    navController: NavHostController = rememberNavController(),
+    startScreen: RecipeScreen = RecipeScreen.Home
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = RecipeScreen.valueOf(
@@ -39,19 +40,20 @@ fun RecipeApp(
         topBar = {
             TopBar(
                 currentScreen = currentScreen,
-                canNavigateBack = navController.previousBackStackEntry != null,
+                canNavigateBack = navController.previousBackStackEntry != null && currentScreen != RecipeScreen.Home,
                 navigateUp = { navController.navigateUp() }
             )
         },
         bottomBar = {
             BottomBar(
                 currentScreen = currentScreen,
+                navController = navController
             )
         }
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = RecipeScreen.Home.name,
+            startDestination = startScreen.name,
             modifier = Modifier.padding(innerPadding)
         ) {
             // Onboarding Screen
@@ -60,7 +62,6 @@ fun RecipeApp(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(dimensionResource(R.dimen.padding_medium)),
-                    viewModel = viewModel,
                     navController = navController
                 )
             }
@@ -71,7 +72,7 @@ fun RecipeApp(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(dimensionResource(R.dimen.padding_medium)),
-                    viewModel = viewModel,
+                    viewModel = recipeViewModel,
                     navController = navController
                 )
             }
@@ -82,7 +83,7 @@ fun RecipeApp(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(dimensionResource(R.dimen.padding_medium)),
-                    viewModel = viewModel,
+                    viewModel = recipeViewModel,
                     navController = navController
                 )
             }
@@ -93,7 +94,7 @@ fun RecipeApp(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(dimensionResource(R.dimen.padding_medium)),
-                    viewModel = viewModel,
+                    viewModel = recipeViewModel,
                     navController = navController
                 )
             }
@@ -104,7 +105,7 @@ fun RecipeApp(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(dimensionResource(R.dimen.padding_medium)),
-                    viewModel = viewModel,
+                    viewModel = recipeViewModel,
                     navController = navController
                 )
             }
@@ -115,7 +116,7 @@ fun RecipeApp(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(dimensionResource(R.dimen.padding_medium)),
-                    viewModel = viewModel,
+                    viewModel = recipeViewModel,
                     navController = navController
                 )
             }
@@ -126,5 +127,7 @@ fun RecipeApp(
 @Preview
 @Composable
 fun RecipeAppPreview() {
-    RecipeApp()
+    RecipeApp(
+        startScreen = RecipeScreen.Home
+    )
 }
