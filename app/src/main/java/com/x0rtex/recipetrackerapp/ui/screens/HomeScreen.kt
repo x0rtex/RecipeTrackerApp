@@ -9,8 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.x0rtex.recipetrackerapp.data.models.RecipeEntity
 import com.x0rtex.recipetrackerapp.ui.components.RecipeCard
 import com.x0rtex.recipetrackerapp.ui.components.RecipeScreen
 import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
@@ -18,11 +20,9 @@ import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navController: NavController,
-    viewModel: RecipeViewModel
+    recipes: List<RecipeEntity>,
+    onRecipeClick: (RecipeEntity) -> Unit
 ) {
-    val recipes by viewModel.recipes.collectAsState()
-
     Column(
         modifier = modifier
     ) {
@@ -38,13 +38,36 @@ fun HomeScreen(
                     RecipeCard(
                         modifier = Modifier.padding(bottom = 8.dp),
                         recipe = recipe,
-                        onClick = {
-                            viewModel.loadRecipe(recipe.id)
-                            navController.navigate(RecipeScreen.ViewRecipe.name)
-                        }
+                        onClick = { onRecipeClick(recipe) }
                     )
                 }
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen(
+        recipes = listOf(
+            RecipeEntity(
+                id = 1,
+                title = "Chocolate Cake",
+                description = "A delicious chocolate cake",
+                ingredients = emptyList(),
+                instructions = listOf("Mix", "Bake", "Enjoy"),
+                servings = 8
+            ),
+            RecipeEntity(
+                id = 2,
+                title = "Pasta Carbonara",
+                description = "Classic Italian pasta",
+                ingredients = emptyList(),
+                instructions = listOf("Boil pasta", "Mix sauce", "Serve"),
+                servings = 4
+            )
+        ),
+        onRecipeClick = {}
+    )
 }

@@ -1,40 +1,51 @@
 package com.x0rtex.recipetrackerapp.ui.screens
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
-import com.x0rtex.recipetrackerapp.R
-import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
+import androidx.compose.ui.tooling.preview.Preview
+import com.x0rtex.recipetrackerapp.data.models.RecipeEntity
 
 @Composable
 fun ViewRecipeScreen(
     modifier: Modifier = Modifier,
-    navController: NavController,
-    viewModel: RecipeViewModel,
-    recipeId: Int? = 0
+    recipe: RecipeEntity?,
+    onEditClick: () -> Unit,
 ) {
-    Scaffold(
-        // Floating Edit Recipe Button
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {},
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Edit,
-                    contentDescription = stringResource(id = R.string.recipe_edit)
-                )
-            }
+    if (recipe == null) {
+        Text("Recipe not found")
+    } else {
+        Column(modifier = modifier) {
+            Text("Title: ${recipe.title}")
+            Text("Description: ${recipe.description}")
+            Text("Servings: ${recipe.servings}")
+            // TODO: Add buttons for edit/delete
         }
-    ) { _ ->
-        Text(stringResource(R.string.recipe_view))
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ViewRecipeScreenPreview() {
+    ViewRecipeScreen(
+        recipe = RecipeEntity(
+            id = 1,
+            title = "Chocolate Cake",
+            description = "A delicious chocolate cake recipe",
+            ingredients = emptyList(),
+            instructions = listOf("Preheat oven", "Mix ingredients", "Bake for 30 minutes"),
+            servings = 8
+        ),
+        onEditClick = {},
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ViewRecipeScreenEmptyPreview() {
+    ViewRecipeScreen(
+        recipe = null,
+        onEditClick = {},
+    )
 }

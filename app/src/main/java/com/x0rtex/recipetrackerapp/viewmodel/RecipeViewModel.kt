@@ -4,10 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.x0rtex.recipetrackerapp.data.models.RecipeEntity
+import com.x0rtex.recipetrackerapp.data.models.RecipeUiState
 import com.x0rtex.recipetrackerapp.data.repository.RecipeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(
@@ -20,6 +24,20 @@ class RecipeViewModel(
 
     private val _selectedRecipe = MutableStateFlow<RecipeEntity?>(null)
     val selectedRecipe: StateFlow<RecipeEntity?> = _selectedRecipe.asStateFlow()
+
+    val uiState: StateFlow<RecipeUiState> = combine(
+        _recipes,
+        _selectedRecipe
+    ) { recipes, selectedRecipe ->
+        RecipeUiState(
+            recipes = recipes,
+            selectedRecipe = selectedRecipe
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = RecipeUiState()
+    )
 
     init {
         loadAllRecipes()

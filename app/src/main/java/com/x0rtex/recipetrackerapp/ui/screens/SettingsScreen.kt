@@ -12,7 +12,6 @@ import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: RecipeViewModel
 ) {
     Text(stringResource(R.string.settings))
 }
