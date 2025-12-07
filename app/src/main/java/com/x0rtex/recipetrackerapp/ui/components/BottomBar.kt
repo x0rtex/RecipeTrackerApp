@@ -66,9 +66,9 @@ fun BottomBar(
 }
 
 @Composable
-fun NavButton(
+private fun NavButton(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController,
     navigateTo: RecipeScreen,
     icon: ImageVector,
     contentDescription: String
@@ -77,18 +77,17 @@ fun NavButton(
         modifier = modifier.size(56.dp),
         onClick = {
             navController.navigate(navigateTo.name) {
-                popUpTo(navController.graph.startDestinationId) {
-                    saveState = true
+                popUpTo(route = RecipeScreen.Home.name) {
+                    inclusive = (navigateTo == RecipeScreen.Home)
                 }
                 launchSingleTop = true
-                restoreState = true
             }
-        },
+        }
     ) {
         Icon(
             modifier = Modifier.size(32.dp),
             imageVector = icon,
-            contentDescription = contentDescription,
+            contentDescription = contentDescription
         )
     }
 }
