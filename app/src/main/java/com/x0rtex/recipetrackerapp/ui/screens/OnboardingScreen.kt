@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.x0rtex.recipetrackerapp.R
 import com.x0rtex.recipetrackerapp.data.repository.SettingsManager
 import com.x0rtex.recipetrackerapp.ui.components.RecipeScreen
+import com.x0rtex.recipetrackerapp.ui.theme.RecipeTrackerAppTheme
 import kotlinx.coroutines.launch
 
 @Composable
@@ -103,7 +104,7 @@ private fun OnboardingContent(
 @Preview(showBackground = true)
 @Composable
 fun OnboardingScreenPreview() {
-    MaterialTheme {
+    RecipeTrackerAppTheme {
         OnboardingContent(onGetStarted = {})
     }
 }

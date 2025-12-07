@@ -37,6 +37,7 @@ import coil.compose.AsyncImage
 import com.x0rtex.recipetrackerapp.R
 import com.x0rtex.recipetrackerapp.data.models.IngredientEntity
 import com.x0rtex.recipetrackerapp.data.models.RecipeEntity
+import com.x0rtex.recipetrackerapp.ui.theme.RecipeTrackerAppTheme
 
 @Composable
 fun ViewRecipeScreen(
@@ -114,40 +115,37 @@ private fun RecipeContent(
             RecipeImageHeader(imageUri = recipe.image)
         }
 
-        if (recipe.ingredients.count() > 0) {
-            // Servings Adjuster
-            ServingsAdjuster(
-                baseServings = recipe.servings,
-                servingMultiplier = servingMultiplier,
-                onServingMultiplierChange = onServingMultiplierChange
-            )
+        ServingsAdjuster(
+            baseServings = recipe.servings,
+            servingMultiplier = servingMultiplier,
+            onServingMultiplierChange = onServingMultiplierChange
+        )
 
-            // Ingredients Card
-            IngredientsCard(
-                ingredients = recipe.ingredients,
-                servingMultiplier = servingMultiplier
-            )
+        // Ingredients Card
+        IngredientsCard(
+            ingredients = recipe.ingredients,
+            servingMultiplier = servingMultiplier
+        )
+
+        // Instructions Card
+        if (recipe.instructions.isNotEmpty()) {
+            InstructionsCard(instructions = recipe.instructions)
         }
 
-        // Only show if at least one nutritional value exists
+        // Nutritional Info Card
         val hasNutritionalData = recipe.totalCalories != null ||
                 recipe.totalFat != null ||
                 recipe.totalSugar != null ||
                 recipe.totalProtein != null
 
         if (hasNutritionalData) {
-            // Nutrition Card
             NutritionalInfoCard(
                 recipe = recipe,
                 servingMultiplier = servingMultiplier
             )
         }
 
-        if (recipe.instructions.count() > 0) {
-            // Instructions Card
-            InstructionsCard(instructions = recipe.instructions)
-        }
-
+        // Notes Card
         if (!recipe.notes.isNullOrBlank()) {
             NotesCard(notes = recipe.notes)
         }
@@ -329,11 +327,23 @@ private fun IngredientItem(
 
 // Format ingredient text by scaling amount
 private fun formatIngredient(ingredient: IngredientEntity, multiplier: Double): String {
-    val scaledAmount = ingredient.amount?.times(multiplier)
-    return if (scaledAmount != null) {
-        "${scaledAmount.format()} ${ingredient.unit ?: ""} ${ingredient.name}"
-    } else {
-        ingredient.name
+    val scaledAmount = ingredient.amount?.times(other = multiplier)
+
+    return when {
+        // Has amount and unit
+        scaledAmount != null && !ingredient.unit.isNullOrBlank() -> {
+            "${scaledAmount.format()} ${ingredient.unit} ${ingredient.name}".trim()
+        }
+        // Has amount but no unit
+        scaledAmount != null -> {
+            "${scaledAmount.format()} ${ingredient.name}".trim()
+        }
+        // Has unit but no amount
+        !ingredient.unit.isNullOrBlank() -> {
+            "${ingredient.unit} ${ingredient.name}".trim()
+        }
+        // Only name
+        else -> ingredient.name
     }
 }
 
@@ -418,7 +428,7 @@ private fun NutritionalInfoCard(
     ) {
         Column(modifier = Modifier.padding(all = 16.dp)) {
             Text(
-                text = stringResource(id = R.string.nutritional_info),
+                text = stringResource(id = R.string.nutritional_values),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -485,30 +495,35 @@ private fun Double.format(): String =
     if (this % 1.0 == 0.0) this.toInt().toString()
     else String.format("%.1f", this)
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun ViewRecipeScreenPreview() {
-    ViewRecipeScreen(
-        recipe = RecipeEntity(
-            id = 1,
-            title = "Chocolate Cake",
-            description = "A delicious chocolate cake recipe",
-            tags = listOf("Dessert", "Baking"),
-            image = "https://i.imgur.com/9zHd5ha.png",
-            ingredients = listOf(
-                IngredientEntity(name = "Flour", amount = 200.0, unit = "g"),
-                IngredientEntity(name = "Sugar", amount = 150.0, unit = "g"),
-                IngredientEntity(name = "Cocoa", amount = 50.0, unit = "g")
+    RecipeTrackerAppTheme {
+        ViewRecipeScreen(
+            recipe = RecipeEntity(
+                id = 1,
+                title = "Chocolate Cake",
+                description = "A delicious chocolate cake recipe",
+                tags = listOf("Dessert", "Baking"),
+                ingredients = listOf(
+                    IngredientEntity(name = "Flour", amount = 2.0, unit = "cups"),
+                    IngredientEntity(name = "Sugar", amount = 1.5, unit = "cups"),
+                    IngredientEntity(name = "Cocoa", amount = 0.75, unit = "cups")
+                ),
+                instructions = listOf(
+                    "Preheat oven to 180°C",
+                    "Mix dry ingredients",
+                    "Add wet ingredients",
+                    "Bake for 30 minutes"
+                ),
+                servings = 8,
+                notes = "Best served warm",
+                totalCalories = 450.0,
+                totalFat = 20.0,
+                totalSugar = 35.0,
+                totalProtein = 6.0
             ),
-            instructions = listOf(
-                "Preheat oven to 180°C",
-                "Mix dry ingredients",
-                "Add wet ingredients",
-                "Bake for 30 minutes"
-            ),
-            servings = 8,
-            notes = "This is a note."
-        ),
-        onEditClick = {}
-    )
+            onEditClick = {}
+        )
+    }
 }

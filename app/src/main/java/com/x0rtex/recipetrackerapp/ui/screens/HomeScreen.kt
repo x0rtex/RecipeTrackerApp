@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.x0rtex.recipetrackerapp.R
 import com.x0rtex.recipetrackerapp.data.models.RecipeEntity
 import com.x0rtex.recipetrackerapp.ui.components.RecipeCard
+import com.x0rtex.recipetrackerapp.ui.theme.RecipeTrackerAppTheme
 
 @Composable
 fun HomeScreen(
@@ -179,25 +180,22 @@ private fun EmptyRecipeList(
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(
-        recipes = listOf(
-            RecipeEntity(
-                id = 1,
-                title = "Chocolate Cake",
-                description = "A delicious chocolate cake",
-                ingredients = emptyList(),
-                instructions = listOf("Mix", "Bake", "Enjoy"),
-                servings = 8
+    RecipeTrackerAppTheme {
+        HomeScreen(
+            recipes = listOf(
+                RecipeEntity(
+                    id = 1,
+                    title = "Chocolate Cake",
+                    description = "A delicious chocolate cake",
+                ),
+                RecipeEntity(
+                    id = 2,
+                    title = "Pasta Carbonara",
+                    description = "Classic Italian pasta",
+                )
             ),
-            RecipeEntity(
-                id = 2,
-                title = "Pasta Carbonara",
-                description = "Classic Italian pasta",
-                ingredients = emptyList(),
-                instructions = listOf("Boil pasta", "Mix sauce", "Serve"),
-                servings = 4
-            )
-        ),
-        onRecipeClick = {}
-    )
+            availableTags = listOf("baking", "cooking"),
+            onRecipeClick = {}
+        )
+    }
 }
