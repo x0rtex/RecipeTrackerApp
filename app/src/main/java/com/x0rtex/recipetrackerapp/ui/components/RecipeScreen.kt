@@ -6,8 +6,8 @@ import com.x0rtex.recipetrackerapp.R
 enum class RecipeScreen(@param:StringRes val title: Int) {
     Onboarding(title = R.string.onboarding),
     Home(title = R.string.app_name),
-    AddRecipe(title = R.string.recipe_add),
-    ViewRecipe(title = R.string.recipe_view),
-    EditRecipe(title = R.string.recipe_edit),
+    AddRecipe(title = R.string.add_recipe),
+    ViewRecipe(title = R.string.view_recipe),
+    EditRecipe(title = R.string.edit_recipe),
     Settings(title = R.string.settings),
 }
