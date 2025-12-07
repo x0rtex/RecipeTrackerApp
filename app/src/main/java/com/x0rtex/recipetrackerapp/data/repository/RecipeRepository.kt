@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class RecipeRepository(
     context: Context
 ) {
+    // Get all recipes from the database
     private val recipeDao = RecipeDatabase.get(context).recipeDao()
 
     fun getAllRecipes(): Flow<List<RecipeEntity>> = recipeDao.getAll()

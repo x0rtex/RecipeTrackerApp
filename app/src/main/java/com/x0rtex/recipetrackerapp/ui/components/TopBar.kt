@@ -25,7 +25,7 @@ fun TopBar(
 ) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(text = stringResource(currentScreen.title)) },
+        title = { Text(text = stringResource(id = currentScreen.title)) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
@@ -34,7 +34,7 @@ fun TopBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button)
+                        contentDescription = stringResource(id = R.string.back)
                     )
                 }
             }
