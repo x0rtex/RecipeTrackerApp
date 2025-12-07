@@ -114,21 +114,39 @@ private fun RecipeContent(
             RecipeImageHeader(imageUri = recipe.image)
         }
 
-        // Servings Adjuster
-        ServingsAdjuster(
-            baseServings = recipe.servings,
-            servingMultiplier = servingMultiplier,
-            onServingMultiplierChange = onServingMultiplierChange
-        )
+        if (recipe.ingredients.count() > 0) {
+            // Servings Adjuster
+            ServingsAdjuster(
+                baseServings = recipe.servings,
+                servingMultiplier = servingMultiplier,
+                onServingMultiplierChange = onServingMultiplierChange
+            )
 
-        // Ingredients Card
-        IngredientsCard(
-            ingredients = recipe.ingredients,
-            servingMultiplier = servingMultiplier
-        )
+            // Ingredients Card
+            IngredientsCard(
+                ingredients = recipe.ingredients,
+                servingMultiplier = servingMultiplier
+            )
+        }
 
-        // Instructions Card
-        InstructionsCard(instructions = recipe.instructions)
+        // Only show if at least one nutritional value exists
+        val hasNutritionalData = recipe.totalCalories != null ||
+                recipe.totalFat != null ||
+                recipe.totalSugar != null ||
+                recipe.totalProtein != null
+
+        if (hasNutritionalData) {
+            // Nutrition Card
+            NutritionalInfoCard(
+                recipe = recipe,
+                servingMultiplier = servingMultiplier
+            )
+        }
+
+        if (recipe.instructions.count() > 0) {
+            // Instructions Card
+            InstructionsCard(instructions = recipe.instructions)
+        }
 
         if (!recipe.notes.isNullOrBlank()) {
             NotesCard(notes = recipe.notes)
@@ -383,6 +401,82 @@ private fun NotesCard(
                 style = MaterialTheme.typography.bodyMedium
             )
         }
+    }
+}
+
+// Nutritional Info Card
+@Composable
+private fun NutritionalInfoCard(
+    recipe: RecipeEntity,
+    servingMultiplier: Double,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+    ) {
+        Column(modifier = Modifier.padding(all = 16.dp)) {
+            Text(
+                text = stringResource(id = R.string.nutritional_info),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            // Show nutritional values scaled by servings
+            recipe.totalCalories?.let { calories ->
+                NutritionalRow(
+                    label = stringResource(id = R.string.calories),
+                    value = (calories * servingMultiplier).format(),
+                    unit = "kcal"
+                )
+            }
+
+            recipe.totalFat?.let { fat ->
+                NutritionalRow(
+                    label = stringResource(id = R.string.fat),
+                    value = (fat * servingMultiplier).format(),
+                    unit = "g"
+                )
+            }
+
+            recipe.totalSugar?.let { sugar ->
+                NutritionalRow(
+                    label = stringResource(id = R.string.sugar),
+                    value = (sugar * servingMultiplier).format(),
+                    unit = "g"
+                )
+            }
+
+            recipe.totalProtein?.let { protein ->
+                NutritionalRow(
+                    label = stringResource(id = R.string.protein),
+                    value = (protein * servingMultiplier).format(),
+                    unit = "g"
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun NutritionalRow(
+    label: String,
+    value: String,
+    unit: String
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = label, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = "$value $unit",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
