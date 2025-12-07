@@ -38,8 +38,4 @@ interface RecipeDao {
     // Get Recipes Without Images
     @Query("SELECT * FROM recipes WHERE image IS NULL")
     suspend fun getRecipesWithoutImages(): List<RecipeEntity>
-
-    // Get Recipes By Title
-    @Query("SELECT * FROM recipes WHERE title LIKE '%' || :query || '%'")
-    fun searchRecipes(query: String): Flow<List<RecipeEntity>>
 }
