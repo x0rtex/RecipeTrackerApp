@@ -67,6 +67,16 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
+
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.gson)
