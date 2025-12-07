@@ -1,29 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Onboarding screen -->
+    <string name="onboarding">Ievads</string>
+    <string name="onboarding_welcome">Laipni lūgts!</string>
+    <string name="onboarding_text">Ērti glabā un pārvaldi savas receptes</string>
     <string name="onboarding_get_started">Sākt</string>
-    <string name="app_name">Recepšu Pieraksts</string>
-    <string name="onboarding_welcome">Laipni Lūgti!</string>
-    <string name="home_search">Meklēt recepti…</string>
-    <string name="recipe_add">Pievienot Recepti</string>
-    <string name="recipe_view">Apskatīt Recepti</string>
-    <string name="recipe_edit">Rediģēt Recepti</string>
-    <string name="recipe_delete">Dzēst Recepti</string>
-    <string name="recipe_title">Nosaukums</string>
-    <string name="recipe_description">Apraksts</string>
-    <string name="recipe_ingredients">Sastāvdaļas</string>
-    <string name="recipe_servings">Porcijas</string>
-    <string name="recipe_image">Attēls</string>
-    <string name="recipe_image_add">Pievienot Attēlu</string>
-    <string name="recipe_image_change">Mainīt Attēlu</string>
-    <string name="recipe_cancel">Atcelt</string>
-    <string name="recipe_submit">Saglabāt</string>
-    <string name="back_button">Atpakaļ</string>
+
+    <!-- Home screen -->
+    <string name="app_name">Receptu Pārvaldnieks</string>
+    <string name="search_recipes">Meklēt recepti…</string>
+    <string name="no_recipes_yet">Vēl nav nevienas receptes. Pievieno pirmo!</string>
+
+    <!-- Recipe CRUD actions -->
+    <string name="add_recipe">Pievienot recepti</string>
+    <string name="view_recipe">Skatīt recepti</string>
+    <string name="edit_recipe">Rediģēt recepti</string>
+    <string name="delete_recipe">Dzēst recepti</string>
+    <string name="delete_recipe_confirmation">Vai tiešām vēlies dzēst “%1$s”? Šo darbību nevar atsaukt.</string>
+
+    <!-- Recipe properties -->
+    <string name="title">Nosaukums</string>
+    <string name="description">Apraksts</string>
+    <string name="ingredients">Sastāvdaļas</string>
+    <string name="servings">Porcijas</string>
+    <string name="instructions">Pagatavošana</string>
+    <string name="notes">Piezīmes</string>
+    <string name="recipe_not_found">Recepte nav atrasta</string>
+
+    <!-- Form fields -->
+    <string name="recipe_title_required">Receptes nosaukums *</string>
+    <string name="title_is_required">Nosaukums ir obligāts</string>
+    <string name="tags_comma_separated">Atslēgvārdi (ar komatiem)</string>
+    <string name="e_g_dessert_baking_quick">piem., Deserts, Cepšana, Ātri</string>
+    <string name="servings_required">Porcijas *</string>
+    <string name="save_changes">Saglabāt</string>
+    <string name="recipe_photo">Receptes foto</string>
+    <string name="remove_photo">Noņemt foto</string>
+    <string name="add_photo">Pievienot foto</string>
+    <string name="valid_servings_number_required">Ievadi derīgu porciju skaitu</string>
+    <string name="add_ingredient">Pievienot sastāvdaļu</string>
+    <string name="instruction_step">Solis %1$d</string>
+    <string name="remove_step">Noņemt soli</string>
+    <string name="add_instruction_step">Pievienot soli</string>
+    <string name="notes_optional">Piezīmes (neobligātas)</string>
+    <string name="amount">Daudzums</string>
+    <string name="unit">Vienība</string>
+    <string name="ingredient">Sastāvdaļa</string>
+    <string name="remove_ingredient">Noņemt sastāvdaļu</string>
+    <string name="remove">Noņemt</string>
+    <string name="add_label">Pievienot %1$s</string>
+    <string name="enter_label">Ievadīt %1$s</string>
+    <string name="add_recipe_photo">Pievienot foto</string>
+    <string name="save_recipe">Saglabāt recepti</string>
+
+    <!-- Recipe Image and Image button -->
+    <string name="image">Attēls</string>
+    <string name="add_image">Pievienot attēlu</string>
+    <string name="change_image">Mainīt attēlu</string>
+
+    <!-- Confirmation / Navigation buttons -->
+    <string name="confirm">Apstiprināt</string>
+    <string name="cancel">Atcelt</string>
+    <string name="submit">Iesniegt</string>
+    <string name="back">Atpakaļ</string>
+    <string name="delete">Dzēst</string>
+
+    <!-- Settings screen -->
     <string name="settings">Iestatījumi</string>
-    <string name="settings_display">Displejs</string>
-    <string name="settings_display_theme">Tēma</string>
-    <string name="settings_display_font_size">Fonta Izmērs</string>
-    <string name="settings_units">Mērvienības</string>
-    <string name="settings_units_weight">Svars</string>
-    <string name="settings_units_volume">Tilpums</string>
-    <string name="settings_data">Dati</string>
+    <string name="appearance">Izskats</string>
+    <string name="theme">Tēma</string>
+    <string name="font_size">Fonta izmērs</string>
+    <string name="units">Mērvienības</string>
+    <string name="using_grams_and_milliliters">Grammi un mililitri</string>
+    <string name="using_cups_and_ounces">Krūzes un unces</string>
+    <string name="data">Dati</string>
+    <string name="reset_onboarding">Atiestatīt ievadu</string>
+    <string name="show_onboarding_screen_again">Rādīt ievadu vēlreiz</string>
+
+    <!-- Camera -->
+    <string name="take_photo">Uzņemt foto</string>
+    <string name="go_back">Atpakaļ</string>
+    <string name="flip_camera">Pārslēgt kameru</string>
+    <string name="capture_photo">Uzņemt attēlu</string>
+    <string name="recipe_jpg">RECIPE_%1$s.jpg</string>
+    <string name="select_image_source">Izvēlēties avotu</string>
+    <string name="choose_where_to_get_your_photo_from">No kurienes pievienot foto?</string>
+    <string name="_camera">Kamera</string>
+    <string name="_gallery">Galerija</string>
+    <string name="camera_permission_required">Nepieciešama kameras atļauja, lai uzņemtu foto</string>
+    <string name="photo_capture_failed">Neizdevās uzņemt foto: %1$s</string>
 </resources>
