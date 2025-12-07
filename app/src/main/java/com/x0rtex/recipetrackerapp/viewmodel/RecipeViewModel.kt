@@ -27,7 +27,6 @@ class RecipeViewModel(
 
     // Track selected recipe
     private val _selectedRecipe = MutableStateFlow<RecipeEntity?>(value = null)
-    val selectedRecipe: StateFlow<RecipeEntity?> = _selectedRecipe.asStateFlow()
 
     // Track search query
     private val _searchQuery = MutableStateFlow(value = "")
