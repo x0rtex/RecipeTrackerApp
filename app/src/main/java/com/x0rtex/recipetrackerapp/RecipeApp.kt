@@ -1,18 +1,13 @@
 package com.x0rtex.recipetrackerapp
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -20,28 +15,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.x0rtex.recipetrackerapp.data.models.UserSettings
-import com.x0rtex.recipetrackerapp.data.repository.SettingsManager
 import com.x0rtex.recipetrackerapp.ui.components.BottomBar
-import com.x0rtex.recipetrackerapp.ui.components.TopBar
 import com.x0rtex.recipetrackerapp.ui.components.RecipeScreen
+import com.x0rtex.recipetrackerapp.ui.components.TopBar
 import com.x0rtex.recipetrackerapp.ui.screens.AddRecipeScreen
 import com.x0rtex.recipetrackerapp.ui.screens.EditRecipeScreen
 import com.x0rtex.recipetrackerapp.ui.screens.HomeScreen
 import com.x0rtex.recipetrackerapp.ui.screens.OnboardingScreen
 import com.x0rtex.recipetrackerapp.ui.screens.SettingsScreen
 import com.x0rtex.recipetrackerapp.ui.screens.ViewRecipeScreen
-import com.x0rtex.recipetrackerapp.ui.theme.RecipeTrackerAppTheme
 import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
 
 @Composable
 fun RecipeApp(
+    settings: UserSettings,
     recipeViewModel: RecipeViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-    val context = LocalContext.current
-    val settingsManager = remember { SettingsManager(context) }
-    val settings by settingsManager.settingsFlow.collectAsState(initial = UserSettings())
-
     // Onboarding Screen If First Time
     val startDestination = if (settings.isFirstLaunch) {
         RecipeScreen.Onboarding.name

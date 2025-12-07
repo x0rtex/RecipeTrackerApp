@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
 
             // Set dark mode from settings
             RecipeTrackerAppTheme(darkTheme = settings.isDarkTheme) {
-                RecipeApp()
+                RecipeApp(settings = settings)
             }
         }
     }
