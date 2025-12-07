@@ -127,6 +127,7 @@ class RecipeViewModel(
     fun updateRecipe(recipe: RecipeEntity) {
         viewModelScope.launch {
             repo.updateRecipe(recipe)
+            _selectedRecipe.value = repo.getRecipe(recipe.id)
         }
     }
 
