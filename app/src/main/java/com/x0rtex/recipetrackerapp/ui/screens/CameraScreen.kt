@@ -9,6 +9,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -88,7 +91,7 @@ fun CameraScreen(
                         }
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Info,
+                            imageVector = Icons.Default.KeyboardArrowUp,
                             contentDescription = stringResource(id = R.string.flip_camera)
                         )
                     }
@@ -127,11 +130,11 @@ fun CameraScreen(
                     .size(size = 72.dp)
                     .border(width = 4.dp, color = Color.White, shape = CircleShape)
             ) {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = stringResource(id = R.string.capture_photo),
-                    modifier = Modifier.size(size = 40.dp),
-                    tint = Color.White
+                Box(
+                    modifier = Modifier
+                        .size(size = 56.dp)
+                        .clip(CircleShape)
+                        .background(Color.White)
                 )
             }
         }
@@ -234,9 +237,7 @@ private fun createImageFile(context: Context): File {
     return File(storageDir, context.getString(R.string.recipe_jpg, timestamp))
 }
 
-/**
- * Suspending function to get CameraProvider.
- */
+// Suspending function to get CameraProvider.
 private suspend fun Context.getCameraProvider(): ProcessCameraProvider =
     suspendCoroutine { continuation ->
         ProcessCameraProvider.getInstance(this).also { future ->
