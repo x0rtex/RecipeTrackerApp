@@ -1,12 +1,16 @@
 package com.x0rtex.recipetrackerapp
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,6 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.x0rtex.recipetrackerapp.data.models.UserSettings
+import com.x0rtex.recipetrackerapp.data.repository.SettingsManager
 import com.x0rtex.recipetrackerapp.ui.components.BottomBar
 import com.x0rtex.recipetrackerapp.ui.components.TopBar
 import com.x0rtex.recipetrackerapp.ui.components.RecipeScreen
@@ -31,17 +37,29 @@ import com.x0rtex.recipetrackerapp.viewmodel.RecipeViewModel
 @Composable
 fun RecipeApp(
     recipeViewModel: RecipeViewModel = viewModel(),
-    navController: NavHostController = rememberNavController(),
-    startScreen: RecipeScreen = RecipeScreen.Home
+    navController: NavHostController = rememberNavController()
 ) {
+    val context = LocalContext.current
+    val settingsManager = remember { SettingsManager(context) }
+    val settings by settingsManager.settingsFlow.collectAsState(initial = UserSettings())
+
+    // Onboarding Screen If First Time
+    val startDestination = if (settings.isFirstLaunch) {
+        RecipeScreen.Onboarding.name
+    } else {
+        RecipeScreen.Home.name
+    }
+
+    // Track current screen and back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = RecipeScreen.valueOf(
-        backStackEntry?.destination?.route ?: RecipeScreen.Home.name
+        value = backStackEntry?.destination?.route ?: RecipeScreen.Home.name
     )
 
     val uiState by recipeViewModel.uiState.collectAsState()
 
     Scaffold(
+        // Top Bar
         topBar = {
             TopBar(
                 currentScreen = currentScreen,
@@ -49,38 +67,50 @@ fun RecipeApp(
                 navigateUp = { navController.navigateUp() }
             )
         },
+
+        // Bottom Bar
         bottomBar = {
             BottomBar(
-                currentScreen = currentScreen,
                 navController = navController
             )
         }
     ) { innerPadding ->
+
+        // Nav Host
         NavHost(
             navController = navController,
-            startDestination = startScreen.name,
-            modifier = Modifier.padding(innerPadding)
+            startDestination = startDestination,
+            modifier = Modifier.padding(paddingValues = innerPadding)
         ) {
+
             // Onboarding Screen
             composable(route = RecipeScreen.Onboarding.name) {
                 OnboardingScreen(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium)),
+                        .padding(all = dimensionResource(id = R.dimen.padding_medium)),
                     navController = navController
                 )
             }
 
             // Home Screen
             composable(route = RecipeScreen.Home.name) {
+                val searchQuery by recipeViewModel.searchQuery.collectAsState()
+                val selectedTag by recipeViewModel.selectedTag.collectAsState()
+                val availableTags by recipeViewModel.availableTags.collectAsState()
                 HomeScreen(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(dimensionResource(R.dimen.padding_medium)),
+                        .padding(all = dimensionResource(id = R.dimen.padding_medium)),
                     recipes = uiState.recipes,
+                    searchQuery = searchQuery,
+                    selectedTag = selectedTag,
+                    availableTags = availableTags,
+                    onSearchQueryChange = { recipeViewModel.updateSearchQuery(query = it) },
+                    onTagSelect = { recipeViewModel.selectTag(tag = it) },
                     onRecipeClick = { recipe ->
                         recipeViewModel.loadRecipe(recipe.id)
-                        navController.navigate(RecipeScreen.ViewRecipe.name)
+                        navController.navigate(route = RecipeScreen.ViewRecipe.name)
                     }
                 )
             }
@@ -118,9 +148,6 @@ fun RecipeApp(
                         recipeViewModel.addRecipe(recipe)
                         navController.navigateUp()
                     },
-                    onCancelClick = {
-                        navController.navigateUp()
-                    }
                 )
             }
 
@@ -135,9 +162,6 @@ fun RecipeApp(
                         recipeViewModel.updateRecipe(recipe)
                         navController.navigateUp()
                     },
-                    onCancelClick = {
-                        navController.navigateUp()
-                    },
                     onDeleteClick = { recipe ->
                         recipeViewModel.deleteRecipe(recipe)
                         navController.popBackStack(RecipeScreen.Home.name, inclusive = false)
@@ -148,6 +172,7 @@ fun RecipeApp(
     }
 }
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
 fun RecipeAppPreview() {
@@ -166,7 +191,6 @@ fun RecipeAppPreview() {
             },
             bottomBar = {
                 BottomBar(
-                    currentScreen = RecipeScreen.Home,
                     navController = navController
                 )
             }
@@ -183,6 +207,7 @@ fun RecipeAppPreview() {
     }
 }
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
 fun RecipeAppViewRecipePreview() {
@@ -201,23 +226,24 @@ fun RecipeAppViewRecipePreview() {
             },
             bottomBar = {
                 BottomBar(
-                    currentScreen = RecipeScreen.ViewRecipe,
                     navController = navController
                 )
             }
         ) { innerPadding ->
-            ViewRecipeScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(dimensionResource(R.dimen.padding_medium)),
-                recipe = uiState.selectedRecipe,
-                onEditClick = { },
-            )
+            Box(modifier = Modifier.padding(innerPadding)) {
+                ViewRecipeScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium)),
+                    recipe = uiState.selectedRecipe,
+                    onEditClick = { }
+                )
+            }
         }
     }
 }
 
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
 fun RecipeAppEditRecipePreview() {
@@ -236,21 +262,20 @@ fun RecipeAppEditRecipePreview() {
             },
             bottomBar = {
                 BottomBar(
-                    currentScreen = RecipeScreen.EditRecipe,
                     navController = navController
                 )
             }
         ) { innerPadding ->
-            EditRecipeScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(dimensionResource(R.dimen.padding_medium)),
-                recipe = uiState.selectedRecipe,
-                onSaveClick = { },
-                onCancelClick = { },
-                onDeleteClick = { }
-            )
+            Box(modifier = Modifier.padding(innerPadding)) {
+                EditRecipeScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium)),
+                    recipe = uiState.selectedRecipe,
+                    onSaveClick = { },
+                    onDeleteClick = { }
+                )
+            }
         }
     }
 }
@@ -271,19 +296,18 @@ fun RecipeAppAddRecipePreview() {
             },
             bottomBar = {
                 BottomBar(
-                    currentScreen = RecipeScreen.AddRecipe,
                     navController = navController
                 )
             }
         ) { innerPadding ->
-            AddRecipeScreen(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(dimensionResource(R.dimen.padding_medium)),
-                onSaveClick = { },
-                onCancelClick = { }
-            )
+            Box(modifier = Modifier.padding(innerPadding)) {
+                AddRecipeScreen(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium)),
+                    onSaveClick = { }
+                )
+            }
         }
     }
 }
@@ -298,13 +322,12 @@ fun RecipeAppSettingsPreview() {
             topBar = {
                 TopBar(
                     currentScreen = RecipeScreen.Settings,
-                    canNavigateBack = false,
+                    canNavigateBack = true,
                     navigateUp = { }
                 )
             },
             bottomBar = {
                 BottomBar(
-                    currentScreen = RecipeScreen.Settings,
                     navController = navController
                 )
             }
@@ -319,3 +342,19 @@ fun RecipeAppSettingsPreview() {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun RecipeAppOnboardingPreview() {
+    val navController = rememberNavController()
+
+    RecipeTrackerAppTheme {
+        OnboardingScreen(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(dimensionResource(R.dimen.padding_medium)),
+            navController = navController
+        )
+    }
+}
+
