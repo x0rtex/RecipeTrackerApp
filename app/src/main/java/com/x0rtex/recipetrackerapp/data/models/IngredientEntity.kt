@@ -10,13 +10,4 @@ data class IngredientEntity(
     val name: String,
     val amount: Double? = null,
     val unit: String? = null,
-
-    // Nutritional Info
-    val calories: Double? = null,
-    val fat: Double? = null,
-    val sugar: Double? = null,
-    val protein: Double? = null,
-
-    // Reusability
-    val isReusable: Boolean = false
 )
