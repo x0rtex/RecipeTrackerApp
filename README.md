@@ -14,6 +14,32 @@ It aims to simplify meal organization, help track nutritional data and make it e
 - CameraX for capturing recipe photos
 - User-configurable light and dark theme
 
+## Images
+
+### Onboarding
+
+<img width="300" height="700" alt="image" src="https://github.com/user-attachments/assets/bab59146-e67a-444c-8b1d-40982624c696" />
+
+### Home Without Recipes
+
+<img width="300" height="700" alt="image" src="https://github.com/user-attachments/assets/db8044db-9f41-4a51-abe1-b844a1a3c9f5" />
+
+### Add Recipe
+
+<img width="300" height="700" alt="image" src="https://github.com/user-attachments/assets/466b0c3b-5e9c-45d0-b4f8-b56072c70022" />
+
+### View Recipe
+
+<img width="300" height="700" alt="image" src="https://github.com/user-attachments/assets/c2ad6fb2-e7e3-4fe4-839f-05b36b0d10f8" />
+
+### Settings (Dark Theme)
+
+<img width="300" height="700" alt="image" src="https://github.com/user-attachments/assets/4db5f21a-b318-44a7-b1b4-782a08ec0d3d" />
+
+### Home (Dark Theme)
+
+<img width="300" height="700" alt="image" src="https://github.com/user-attachments/assets/2e3fa541-3add-4319-aa22-52b4382f9dc6" />
+
 ## Test Cases
 
 ### 1. RecipeFormStateTest
