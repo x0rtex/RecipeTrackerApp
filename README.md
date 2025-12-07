@@ -9,7 +9,10 @@ It aims to simplify meal organization, help track nutritional data and make it e
 - Add, edit, and delete recipes
 - Track nutritional information for each recipe
 - Adjust recipe quantities for different serving sizes
-- Search and filter recipes by name, ingredients, or nutritional information
+- Search for recipes by name
+- Filter recipes by tags
+- CameraX for capturing recipe photos
+- User-configurable light and dark theme
 
 ## Test Cases
 
