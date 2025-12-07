@@ -7,8 +7,16 @@ import androidx.room.PrimaryKey
 data class IngredientEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val recipeId: Int,
-    val title: String,
-    val amount: Int?,
-    val calories: Int?
+    val name: String,
+    val amount: Double? = null,
+    val unit: String? = null,
+
+    // Nutritional Info
+    val calories: Double? = null,
+    val fat: Double? = null,
+    val sugar: Double? = null,
+    val protein: Double? = null,
+
+    // Reusability
+    val isReusable: Boolean = false
 )
